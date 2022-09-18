@@ -10,8 +10,6 @@ def get_duration(person):
     if person.leaved_at:
         leaved_at = person.leaved_at
         return leaved_at - entered_at
-    else:
-        return None
 
 
 def format_duration(storage_time):
@@ -29,10 +27,8 @@ def passcard_info_view(request, passcode):
         format_during = format_duration(during)
         minutes = int(during.seconds) // 60
         is_strange = False
-        if not during:
-            continue
-        if minutes > 60:
-            is_strange = True
+        if not during: continue
+        is_strange = True if minutes > 60 else False
         about_visit = {
             'entered_at': visit.entered_at,
             'duration': format_during,
