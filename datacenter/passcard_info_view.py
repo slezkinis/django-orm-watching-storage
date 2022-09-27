@@ -1,15 +1,8 @@
 from datacenter.models import Passcard
 from datacenter.models import Visit
+from datacenter.models import get_duration
 from django.shortcuts import render
-from django.utils.timezone import localtime
 from django.shortcuts import get_object_or_404
-
-
-def get_duration(person):
-    entered_at = localtime(person.entered_at)
-    if person.leaved_at:
-        leaved_at = person.leaved_at
-        return leaved_at - entered_at
 
 
 def format_duration(storage_time):
