@@ -10,17 +10,24 @@ def format_duration(storage_time):
     return duration
 
 
+def get_is_strange(during):
+    if not during: return
+    minutes = int(during.seconds) // 60
+    is_strange = False
+    is_strange = True if minutes > 60 else False
+    return is_strange
+
+
 def passcard_info_view(request, passcode):
     passcard = get_object_or_404(Passcard.objects, passcode=passcode)
     visits = Visit.objects.filter(passcard=passcard)
     this_passcard_visits = []
     for visit in visits:
         during = get_duration(visit, True)
+        is_strange = get_is_strange(during)
         format_during = format_duration(during)
-        minutes = int(during.seconds) // 60
-        is_strange = False
-        if not during: continue
-        is_strange = True if minutes > 60 else False
+        if is_strange is None:
+            continue
         about_visit = {
             'entered_at': visit.entered_at,
             'duration': format_during,
