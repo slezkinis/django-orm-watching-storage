@@ -31,7 +31,13 @@ class Visit(models.Model):
         )
 
 
-def get_duration(person):
-    local_time = localtime()
+def get_duration(person, variable_can_empty=False):
     entered_at = localtime(person.entered_at)
-    return local_time - entered_at
+    if variable_can_empty:
+        if person.leaved_at:
+            leaved_at = person.leaved_at
+            return leaved_at - entered_at
+    else:
+        local_time = localtime()
+        return local_time - entered_at
+    
