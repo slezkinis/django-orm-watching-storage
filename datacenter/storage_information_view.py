@@ -10,7 +10,7 @@ def format_duration(storage_time):
 
 
 def storage_information_view(request):
-    visit_peoples = Visit.objects.filter(leaved_at=None)
+    visit_peoples = Visit.objects.filter(leaved_at__isnull=True)
     non_closed_visits = []
     for person in visit_peoples:
         storage_time = get_duration(person)
