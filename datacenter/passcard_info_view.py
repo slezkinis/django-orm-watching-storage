@@ -12,12 +12,12 @@ def passcard_info_view(request, passcode):
         during = visit.get_duration()
         is_strange = visit.get_is_strange(during)
         format_during = visit.format_duration(during)
-        about_visit = {
+        serialized_visit = {
             'entered_at': visit.entered_at,
             'duration': format_during,
             'is_strange': is_strange
         }
-        this_passcard_visits.append(about_visit)
+        this_passcard_visits.append(serialized_visit)
     context = {
         'passcard': passcard,
         'this_passcard_visits': this_passcard_visits
