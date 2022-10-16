@@ -9,12 +9,12 @@ def storage_information_view(request):
         storage_time = person.get_duration()
         entered_at = person.entered_at
         duration = person.format_duration(storage_time)
-        about_visit_person = {
+        serialized_visit = {
             'who_entered': person.passcard,
             'entered_at': entered_at,
             'duration': duration,
         }
-        non_closed_visits.append(about_visit_person)
+        non_closed_visits.append(serialized_visit)
     
     context = {
         'non_closed_visits': non_closed_visits
