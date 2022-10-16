@@ -31,13 +31,27 @@ class Visit(models.Model):
         )
 
 
-def get_duration(person, variable_can_empty=False):
-    entered_at = localtime(person.entered_at)
-    if variable_can_empty:
-        if person.leaved_at:
-            leaved_at = person.leaved_at
-            return leaved_at - entered_at
-    else:
-        local_time = localtime()
-        return local_time - entered_at
+    def format_duration(self, storage_time):
+        parts_time = str(storage_time).split('.')
+        duration = parts_time[0]
+        return duration
+    
+
+    def get_is_strange(self, during):
+        if not during: return
+        minutes = int(during.seconds) // 60
+        is_strange = False
+        is_strange = True if minutes > 60 else False
+        return is_strange
+
+
+    def get_duration(self, variable_can_empty=False):
+        entered_at = localtime(self.entered_at)
+        if variable_can_empty:
+            if self.leaved_at:
+                leaved_at = self.leaved_at
+                return leaved_at - entered_at
+        else:
+            local_time = localtime()
+            return local_time - entered_at
     

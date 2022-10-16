@@ -1,21 +1,7 @@
 from datacenter.models import Passcard
-from datacenter.models import Visit, get_duration
+from datacenter.models import Visit
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
-
-
-def format_duration(storage_time):
-    parts_time = str(storage_time).split('.')
-    duration = parts_time[0]
-    return duration
-
-
-def get_is_strange(during):
-    if not during: return
-    minutes = int(during.seconds) // 60
-    is_strange = False
-    is_strange = True if minutes > 60 else False
-    return is_strange
 
 
 def passcard_info_view(request, passcode):
@@ -23,9 +9,9 @@ def passcard_info_view(request, passcode):
     visits = Visit.objects.filter(passcard=passcard)
     this_passcard_visits = []
     for visit in visits:
-        during = get_duration(visit, True)
-        is_strange = get_is_strange(during)
-        format_during = format_duration(during)
+        during = visit.get_duration(True)
+        is_strange = visit.get_is_strange(during)
+        format_during = visit.format_duration(during)
         if is_strange is None:
             continue
         about_visit = {
