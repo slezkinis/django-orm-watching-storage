@@ -37,13 +37,10 @@ class Visit(models.Model):
         return duration
     
 
-    def get_is_strange(self, during):
-        if not during:
-            return
+    def get_is_strange(self, minutes=60):
+        during = self.get_duration(True)
         minutes = int(during.seconds) // 60
-        is_strange = False
-        is_strange = True if minutes > 60 else False
-        return is_strange
+        return minutes > 60
 
 
     def get_duration(self, variable_can_empty=False):
