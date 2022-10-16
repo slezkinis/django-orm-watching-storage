@@ -9,11 +9,9 @@ def passcard_info_view(request, passcode):
     visits = Visit.objects.filter(passcard=passcard)
     this_passcard_visits = []
     for visit in visits:
-        during = visit.get_duration(True)
+        during = visit.get_duration()
         is_strange = visit.get_is_strange(during)
         format_during = visit.format_duration(during)
-        if is_strange is None:
-            continue
         about_visit = {
             'entered_at': visit.entered_at,
             'duration': format_during,

@@ -38,18 +38,16 @@ class Visit(models.Model):
     
 
     def get_is_strange(self, minutes=60):
-        during = self.get_duration(True)
+        during = self.get_duration()
         minutes = int(during.seconds) // 60
         return minutes > 60
 
 
-    def get_duration(self, variable_can_empty=False):
+    def get_duration(self):
         entered_at = localtime(self.entered_at)
-        if variable_can_empty:
-            if self.leaved_at:
-                leaved_at = self.leaved_at
-                return leaved_at - entered_at
+        if self.leaved_at:
+            leaved_at = self.leaved_at
         else:
-            local_time = localtime()
-            return local_time - entered_at
+            leaved_at = localtime()
+        return leaved_at - entered_at
     
