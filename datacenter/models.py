@@ -9,6 +9,7 @@ class Passcard(models.Model):
     passcode = models.CharField(max_length=200, unique=True)
     owner_name = models.CharField(max_length=255)
 
+
     def __str__(self):
         if self.is_active:
             return self.owner_name
@@ -20,6 +21,7 @@ class Visit(models.Model):
     passcard = models.ForeignKey(Passcard, on_delete=models.CASCADE)
     entered_at = models.DateTimeField()
     leaved_at = models.DateTimeField(null=True)
+
 
     def __str__(self):
         return '{user} entered at {entered} {leaved}'.format(
@@ -52,4 +54,3 @@ class Visit(models.Model):
         leaved_at = localtime(self.leaved_at)
         delta = leaved_at - entered_at
         return delta.total_seconds()
-    
