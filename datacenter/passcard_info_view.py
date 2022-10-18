@@ -10,10 +10,10 @@ def passcard_info_view(request, passcode):
     this_passcard_visits = []
     for visit in visits:
         is_strange = visit.is_strange()
-        format_during = visit.format_duration()
+        formatted_duration = visit.format_duration()
         serialized_visit = {
             'entered_at': visit.entered_at,
-            'duration': format_during,
+            'duration': formatted_duration,
             'is_strange': is_strange
         }
         this_passcard_visits.append(serialized_visit)

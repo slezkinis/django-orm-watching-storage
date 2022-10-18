@@ -5,11 +5,11 @@ from django.shortcuts import render
 def storage_information_view(request):
     visit_peoples = Visit.objects.filter(leaved_at__isnull=True)
     non_closed_visits = []
-    for person in visit_peoples:
-        entered_at = person.entered_at
-        duration = person.format_duration()
+    for visit in visit_peoples:
+        entered_at = visit.entered_at
+        duration = visit.format_duration()
         serialized_visit = {
-            'who_entered': person.passcard,
+            'who_entered': visit.passcard,
             'entered_at': entered_at,
             'duration': duration,
         }
