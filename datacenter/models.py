@@ -41,7 +41,7 @@ class Visit(models.Model):
         return f'{hours}ч:{minutes}мин'
     
 
-    def get_is_strange(self, minutes=60):
+    def is_strange(self, minutes=60):
         during = self.get_duration()
         minutes = int(during.seconds) // 60
         return minutes > 60
