@@ -1,4 +1,3 @@
-from datetime import timedelta
 from django.db import models
 from django.utils.timezone import localtime
 
@@ -33,19 +32,17 @@ class Visit(models.Model):
 
     def format_duration(self):
         storage_time = self.get_duration()
-        delta = timedelta(seconds=storage_time)
-        total_seconds = delta.total_seconds()
-        hours = int(total_seconds // 3600)
-        minutes = int(total_seconds % 3600 // 60)
+        hours = int(storage_time // 3600)
+        minutes = int(storage_time % 3600 // 60)
         return f'{hours}ч:{minutes}мин'
 
     def is_strange(self, minutes=60):
         during = self.get_duration()
-        minutes = int(during.seconds) // 60
+        minutes = during // 60
         return minutes > 60
 
     def get_duration(self):
         entered_at = localtime(self.entered_at)
         leaved_at = localtime(self.leaved_at)
         delta = leaved_at - entered_at
-        return delta.total_seconds()
+        return int(delta.total_seconds())
