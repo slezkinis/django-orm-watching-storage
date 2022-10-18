@@ -9,7 +9,6 @@ class Passcard(models.Model):
     passcode = models.CharField(max_length=200, unique=True)
     owner_name = models.CharField(max_length=255)
 
-
     def __str__(self):
         if self.is_active:
             return self.owner_name
@@ -21,7 +20,6 @@ class Visit(models.Model):
     passcard = models.ForeignKey(Passcard, on_delete=models.CASCADE)
     entered_at = models.DateTimeField()
     leaved_at = models.DateTimeField(null=True)
-
 
     def __str__(self):
         return '{user} entered at {entered} {leaved}'.format(
@@ -40,7 +38,7 @@ class Visit(models.Model):
         hours = int(total_seconds // 3600)
         minutes = int(total_seconds % 3600 // 60)
         return f'{hours}ч:{minutes}мин'
-    
+
     def is_strange(self, minutes=60):
         during = self.get_duration()
         minutes = int(during.seconds) // 60

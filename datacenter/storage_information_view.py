@@ -14,7 +14,7 @@ def storage_information_view(request):
             'duration': duration,
         }
         non_closed_visits.append(serialized_visit)
-    
+
     context = {
         'non_closed_visits': non_closed_visits
     }
