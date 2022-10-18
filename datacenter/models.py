@@ -31,7 +31,6 @@ class Visit(models.Model):
             )
         )
 
-
     def format_duration(self):
         storage_time = self.get_duration()
         delta = timedelta(seconds=storage_time)
@@ -40,16 +39,13 @@ class Visit(models.Model):
         minutes = int(total_seconds % 3600 // 60)
         return f'{hours}ч:{minutes}мин'
     
-
     def is_strange(self, minutes=60):
         during = self.get_duration()
         minutes = int(during.seconds) // 60
         return minutes > 60
-
 
     def get_duration(self):
         entered_at = localtime(self.entered_at)
         leaved_at = localtime(self.leaved_at)
         delta = leaved_at - entered_at
         return delta.total_seconds()
-    
